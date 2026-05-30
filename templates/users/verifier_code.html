@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyHome | Vérification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --navy: #0d1f3c; --blue: #1e3c72; --accent: #f5a623; --light-border: #e8edf5; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: linear-gradient(135deg, var(--navy), var(--blue)); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .code-card { background: white; max-width: 450px; width: 100%; padding: 40px; border-radius: 28px; text-align: center; }
+        .code-card h1 { font-size: 28px; color: var(--navy); margin-bottom: 10px; }
+        .code-card p { color: #6c7a8e; margin-bottom: 25px; }
+        input { width: 100%; padding: 14px; border: 1px solid var(--light-border); border-radius: 18px; font-size: 18px; text-align: center; letter-spacing: 4px; margin-bottom: 20px; }
+        button { background: var(--blue); color: white; width: 100%; padding: 14px; border: none; border-radius: 40px; font-weight: 600; cursor: pointer; }
+        .error { background: #ffe6e6; color: #c0392b; padding: 12px; border-radius: 18px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+<div class="code-card">
+    <h1><i class="fas fa-shield-alt"></i> Double authentification</h1>
+    <p>Un code à 6 chiffres a été envoyé à <strong>{{ email }}</strong></p>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="error">⚠️ {{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="code" placeholder="000000" maxlength="6" required>
+        <button type="submit">Vérifier et me connecter</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Contrat de location</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        .info {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #34495e;
+            color: white;
+        }
+        .signatures {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature {
+            width: 45%;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <h1>CONTRAT DE LOCATION</h1>
+    <p style="text-align: center;">Entre les soussignés</p>
+
+    <h2>1. Parties prenantes</h2>
+    <div class="info">
+        <p><strong>📍 Bailleur (Propriétaire) :</strong></p>
+        <p>Nom : {{ logement.proprietaire.username|default:"À renseigner" }}<br>
+        Email : {{ logement.proprietaire.email|default:"À renseigner" }}<br>
+        Téléphone : {{ logement.proprietaire.telephone|default:"À renseigner" }}</p>
+    </div>
+
+    <div class="info">
+        <p><strong>🎓 Locataire (Étudiant) :</strong></p>
+        <p>Nom : {{ etudiant.username }}<br>
+        Email : {{ etudiant.email }}<br>
+        Téléphone : {{ etudiant.telephone|default:"À renseigner" }}</p>
+    </div>
+
+    <h2>2. Logement concerné</h2>
+    <div class="info">
+        <p><strong>Description :</strong> {{ logement.titre }}<br>
+        <strong>Adresse :</strong> {{ logement.localisation }}<br>
+        <strong>Description détaillée :</strong> {{ logement.description }}</p>
+    </div>
+
+    <h2>3. Durée et montant de la location</h2>
+    <table>
+        <tr>
+            <th>Période</th>
+            <td>Du {{ reservation.date_debut|date:"d/m/Y" }} au {{ reservation.date_fin|date:"d/m/Y" }}</td>
+        </tr>
+        <tr>
+            <th>Loyer mensuel</th>
+            <td>{{ logement.prix }} FCFA</td>
+        </tr>
+        <tr>
+            <th>Montant total</th>
+            <td><strong>{{ reservation.montant_total }} FCFA</strong></td>
+        </tr>
+    </table>
+
+    <h2>4. Conditions générales</h2>
+    <ul>
+        <li>Le locataire s'engage à payer le loyer mensuellement.</li>
+        <li>Un dépôt de garantie équivalent à un mois de loyer est demandé.</li>
+        <li>Le locataire doit entretenir le logement et signaler tout dégât.</li>
+        <li>Le bailleur s'engage à fournir un logement décent et conforme à la description.</li>
+        <li>La résiliation du contrat doit être notifiée 30 jours à l'avance.</li>
+    </ul>
+
+    <h2>5. Signatures</h2>
+    <div class="signatures">
+        <div class="signature">
+            <p><strong>Le locataire</strong></p>
+            <p>Signature électronique :</p>
+            <p>____________________</p>
+            <p>Fait à {{ logement.localisation|default:"Dakar" }}, le {{ date_aujourdhui }}</p>
+        </div>
+        <div class="signature">
+            <p><strong>Le bailleur</strong></p>
+            <p>Signature électronique :</p>
+            <p>____________________</p>
+            <p>Fait à {{ logement.localisation|default:"Dakar" }}, le {{ date_aujourdhui }}</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Contrat généré par EasyHome Student - Plateforme de location étudiante</p>
+    </div>
+</body>
+</html>

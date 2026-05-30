@@ -1,0 +1,270 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyHome | Soumettre une annonce</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #0d1f3c;
+            --blue: #1e3c72;
+            --gold: #f5a623;
+            --gold-light: #ffd87a;
+            --light-border: #e8edf5;
+            --gray: #6c7a8e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: #fafcff; min-height: 100vh; }
+
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 0 50px; height: 72px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--navy);
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px; font-weight: 900;
+            color: white; text-decoration: none;
+        }
+        .logo .accent { color: var(--gold-light); }
+        .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
+        .nav-links a {
+            text-decoration: none; font-size: 15px;
+            font-weight: 500; color: rgba(255,255,255,0.85);
+        }
+        .nav-links a:hover { color: var(--gold-light); }
+
+        .page-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 110px 24px 60px;
+        }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--blue); text-decoration: none;
+            font-size: 14px; font-weight: 600; margin-bottom: 24px;
+            transition: gap 0.2s;
+        }
+        .back-link:hover { gap: 12px; }
+
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px; font-weight: 900;
+            color: var(--navy); margin-bottom: 12px;
+        }
+        .page-header p { color: var(--gray); font-size: 16px; }
+
+        .info-box {
+            background: #fff8e6;
+            border: 1px solid var(--gold);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 28px;
+            display: flex; gap: 12px; align-items: flex-start;
+        }
+        .info-box i { color: var(--gold); font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+        .info-box p { color: var(--navy); font-size: 14px; line-height: 1.6; }
+
+        .messages { margin-bottom: 24px; }
+        .msg-success {
+            background: #d1e7dd; color: #0f5132;
+            padding: 14px 18px; border-radius: 12px;
+            font-size: 14px; font-weight: 500; margin-bottom: 10px;
+        }
+        .msg-error {
+            background: #f8d7da; color: #842029;
+            padding: 14px 18px; border-radius: 12px;
+            font-size: 14px; font-weight: 500; margin-bottom: 10px;
+        }
+
+        .form-card {
+            background: white; border-radius: 28px;
+            padding: 40px; border: 1px solid var(--light-border);
+            box-shadow: 0 4px 20px rgba(30,60,114,0.06);
+        }
+        .form-section { margin-bottom: 32px; }
+        .form-section h3 {
+            font-size: 16px; font-weight: 700; color: var(--navy);
+            margin-bottom: 20px; padding-bottom: 10px;
+            border-bottom: 2px solid var(--gold); display: inline-block;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block; font-size: 13px; font-weight: 600;
+            color: var(--navy); margin-bottom: 8px;
+        }
+        .form-group label i { color: var(--blue); margin-right: 6px; }
+        .form-group input,
+        .form-group textarea {
+            width: 100%; padding: 13px 16px;
+            border: 1.5px solid var(--light-border);
+            border-radius: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px; color: var(--navy);
+            background: #fafcff; transition: border-color 0.2s; outline: none;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.08);
+        }
+        .form-group textarea { min-height: 120px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+        .btn-submit {
+            width: 100%; background: var(--blue); color: white;
+            border: none; padding: 16px; border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px; font-weight: 700;
+            cursor: pointer; transition: all 0.25s;
+            display: flex; align-items: center;
+            justify-content: center; gap: 10px;
+        }
+        .btn-submit:hover {
+            background: var(--navy); transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(30,60,114,0.25);
+        }
+
+        .footer { background: var(--navy); padding: 30px 60px; margin-top: 60px; }
+        .footer-bottom {
+            text-align: center; font-size: 13px;
+            color: rgba(255,255,255,0.3);
+        }
+
+        @media (max-width: 600px) {
+            .navbar { padding: 0 20px; }
+            .page-container { padding: 100px 16px 40px; }
+            .form-card { padding: 24px 20px; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">Easy<span class="accent">Home</span></a>
+    <ul class="nav-links">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/logements/dashboard/">Mon tableau de bord</a></li>
+        <li><a href="/users/deconnexion/">Déconnexion</a></li>
+    </ul>
+</nav>
+
+<div class="page-container">
+
+    <a href="/logements/dashboard/" class="back-link">
+        <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+    </a>
+
+    <div class="page-header">
+        <h1>📝 Soumettre une annonce</h1>
+        <p>Remplissez le formulaire. Notre équipe publiera votre logement sous 24h.</p>
+    </div>
+
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="msg-success">{{ message }}</div>
+            {% else %}
+                <div class="msg-error">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="info-box">
+        <i class="fas fa-info-circle"></i>
+        <p>
+            Votre annonce sera examinée par notre équipe avant publication.
+            <strong>Délai de traitement : 24 heures.</strong>
+        </p>
+    </div>
+
+    <div class="form-card">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-section">
+                <h3><i class="fas fa-user"></i> Vos informations</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nom complet *</label>
+                        <input type="text" name="nom"
+                               placeholder="Ex: Diallo Mamadou"
+                               value="{{ request.user.get_full_name }}"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email *</label>
+                        <input type="email" name="email"
+                               placeholder="Ex: diallo@email.com"
+                               value="{{ request.user.email }}"
+                               required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Téléphone *</label>
+                    <input type="tel" name="telephone"
+                           placeholder="Ex: 77 123 45 67"
+                           required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3><i class="fas fa-home"></i> Votre logement</h3>
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Titre de l'annonce *</label>
+                    <input type="text" name="titre"
+                           placeholder="Ex: Studio meublé à Mermoz, Dakar"
+                           required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> Localisation *</label>
+                        <input type="text" name="localisation"
+                               placeholder="Ex: Mermoz, Dakar"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-money-bill-wave"></i> Prix mensuel (FCFA) *</label>
+                        <input type="number" name="prix"
+                               placeholder="Ex: 75000"
+                               min="10000"
+                               required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-align-left"></i> Description *</label>
+                    <textarea name="description"
+                              placeholder="Décrivez votre logement : surface, équipements, proximité université..."
+                              required></textarea>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-camera"></i> Photo du logement</label>
+                    <input type="file" name="photo" accept="image/*">
+                    <small style="color:var(--gray); font-size:12px; margin-top:6px; display:block;">
+                        Format accepté : JPG, PNG. Taille max : 5 Mo.
+                    </small>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane"></i>
+                Soumettre mon annonce
+            </button>
+        </form>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-bottom">© 2025 EasyHome · Tous droits réservés · Dakar, Sénégal</div>
+</footer>
+
+</body>
+</html>

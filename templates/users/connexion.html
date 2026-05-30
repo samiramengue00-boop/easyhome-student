@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyHome | Connexion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #0d1f3c;
+            --blue: #1e3c72;
+            --gold: #f5a623;
+            --gold-light: #ffd87a;
+            --off-white: #f8f9fc;
+            --gray: #6c7a8e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .auth-card {
+            background: white;
+            border-radius: 32px;
+            max-width: 460px;
+            width: 100%;
+            padding: 44px 40px;
+            box-shadow: 0 35px 60px rgba(0,0,0,0.25);
+            text-align: center;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--navy);
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        .logo span { color: var(--gold); }
+        .auth-sub {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--navy);
+            display: block;
+            margin-bottom: 6px;
+        }
+        .input-group label i {
+            margin-right: 6px;
+            color: var(--blue);
+        }
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1.5px solid #e8edf5;
+            border-radius: 18px;
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+        .input-group input:focus {
+            border-color: var(--blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30,60,114,0.1);
+        }
+        button {
+            background: var(--blue);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+        button:hover {
+            background: var(--navy);
+            transform: translateY(-2px);
+        }
+        .auth-link {
+            margin-top: 28px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        .auth-link a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 700;
+        }
+        .auth-link a:hover { text-decoration: underline; }
+        .error-message {
+            background: #ffe6e6;
+            color: #c0392b;
+            padding: 12px;
+            border-radius: 18px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: var(--gray);
+            text-decoration: none;
+        }
+        .back-home:hover { color: var(--blue); }
+    </style>
+</head>
+<body>
+<div class="auth-card">
+    <div class="logo">Easy<span>Home</span></div>
+    <div class="auth-sub">Bienvenue sur EasyHome</div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="error-message"><i class="fas fa-exclamation-circle" style="margin-right:8px"></i>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="input-group">
+            <label><i class="fas fa-user"></i> Nom d'utilisateur</label>
+            <input type="text" name="username" placeholder="ex: samira_etudiant" required>
+        </div>
+        <div class="input-group">
+            <label><i class="fas fa-lock"></i> Mot de passe</label>
+            <input type="password" name="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit">Se connecter</button>
+    </form>
+
+    <div class="auth-link">
+        Pas encore inscrit ? <a href="{% url 'inscription' %}">Créer un compte</a>
+    </div>
+    <a href="/" class="back-home"><i class="fas fa-arrow-left"></i> Retour à l'accueil</a>
+</div>
+</body>
+</html>

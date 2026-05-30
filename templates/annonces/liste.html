@@ -1,0 +1,232 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyHome | Logements</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #0d1f3c;
+            --blue: #1e3c72;
+            --accent: #f5a623;
+            --accent-light: #ffd87a;
+            --white: #ffffff;
+            --off-white: #f8f9fc;
+            --gray: #6c7a8e;
+            --light-border: #e8edf5;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--navy); }
+
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 0 50px; height: 72px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--navy);
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px; font-weight: 900;
+            color: white; text-decoration: none;
+        }
+        .logo .accent { color: var(--accent); }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a {
+            text-decoration: none; font-size: 15px; font-weight: 500;
+            color: rgba(255,255,255,0.9);
+        }
+        .nav-links a:hover { color: var(--accent-light); }
+
+        .filters-section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 110px 30px 40px;
+        }
+        .search-card {
+            background: white;
+            border-radius: 20px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid var(--light-border);
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        .search-field {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 22px;
+            border-right: 1px solid var(--light-border);
+        }
+        .search-field i { color: var(--blue); font-size: 16px; }
+        .search-field input, .search-field select {
+            border: none; outline: none; font-size: 15px;
+            width: 100%; background: transparent;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .search-btn {
+            background: var(--blue);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .logements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+        }
+        .logement-card {
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid var(--light-border);
+            transition: all 0.3s;
+        }
+        .logement-card:hover { transform: translateY(-5px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); }
+        .card-img-wrap { position: relative; overflow: hidden; }
+        .logement-card img { width: 100%; height: 220px; object-fit: cover; }
+        .card-img-placeholder {
+            height: 220px;
+            background: linear-gradient(135deg, #dce4f0, #eef2f8);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 48px;
+        }
+        .card-badge {
+            position: absolute; top: 16px; left: 16px;
+            background: var(--accent);
+            color: var(--navy);
+            font-size: 11px; font-weight: 700;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 50px;
+        }
+        .card-body { padding: 22px; }
+        .card-location { font-size: 12px; font-weight: 600; color: var(--blue); margin-bottom: 8px; }
+        .card-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--light-border);
+            padding-top: 16px;
+            margin-top: 8px;
+        }
+        .card-price { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: var(--navy); }
+        .card-price span { font-size: 13px; font-weight: 400; color: var(--gray); }
+        .card-btn {
+            background: var(--blue);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .card-btn:hover { background: var(--navy); }
+
+        .footer {
+            background: var(--navy);
+            padding: 60px 60px 30px;
+            margin-top: 60px;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            font-size: 13px;
+            color: rgba(255,255,255,0.3);
+        }
+
+        @media (max-width: 800px) {
+            .navbar { padding: 0 24px; }
+            .filters-section { padding: 100px 20px 40px; }
+            .search-card { flex-direction: column; }
+            .search-field { border-right: none; border-bottom: 1px solid var(--light-border); width: 100%; }
+            .search-btn { width: 100%; }
+            .footer { padding: 40px 20px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">Easy<span class="accent">Home</span></a>
+    <ul class="nav-links">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/logements/">Louer</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="/users/profil/"><i class="fas fa-user"></i> {{ user.username }}</a></li>
+            <li><a href="/users/deconnexion/">Déconnexion</a></li>
+        {% else %}
+            <li><a href="/users/connexion/">Connexion</a></li>
+            <li><a href="/users/inscription/" class="nav-btn">S'inscrire</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<div class="filters-section">
+    <form method="GET" class="search-card">
+        <div class="search-field">
+            <i class="fas fa-map-marker-alt"></i>
+            <input type="text" name="localisation" placeholder="Dakar, Thiès, Saint-Louis" value="{{ request.GET.localisation }}">
+        </div>
+        <div class="search-field">
+            <i class="fas fa-money-bill-wave"></i>
+            <input type="number" name="prix_max" placeholder="Prix max (FCFA)" value="{{ request.GET.prix_max }}">
+        </div>
+        <div class="search-field">
+            <i class="fas fa-building"></i>
+            <select name="type_logement">
+                <option value="">Tous les types</option>
+                <option value="studio" {% if request.GET.type_logement == 'studio' %}selected{% endif %}>Studio</option>
+                <option value="chambre" {% if request.GET.type_logement == 'chambre' %}selected{% endif %}>Chambre</option>
+                <option value="appartement" {% if request.GET.type_logement == 'appartement' %}selected{% endif %}>Appartement</option>
+                <option value="villa" {% if request.GET.type_logement == 'villa' %}selected{% endif %}>Villa</option>
+            </select>
+        </div>
+        <button type="submit" class="search-btn"><i class="fas fa-search"></i> Filtrer</button>
+    </form>
+
+    <div class="logements-grid">
+        {% for logement in logements %}
+        <div class="logement-card">
+            <div class="card-img-wrap">
+                {% if logement.image %}
+                    <img src="{{ logement.image.url }}" alt="{{ logement.titre }}">
+                {% else %}
+                    <div class="card-img-placeholder">🏠</div>
+                {% endif %}
+                <div class="card-badge">Disponible</div>
+            </div>
+            <div class="card-body">
+                <div class="card-location"><i class="fas fa-map-marker-alt"></i> {{ logement.localisation }}</div>
+                <h3 class="card-title">{{ logement.titre }}</h3>
+                <div class="card-footer">
+                    <div class="card-price">{{ logement.prix }} <span>FCFA / mois</span></div>
+                    <a href="/logements/{{ logement.id }}/" class="card-btn">Voir →</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p style="color: var(--gray); text-align: center; padding: 40px;">Aucun logement trouvé.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-bottom">© 2025 EasyHome · Tous droits réservés · Dakar, Sénégal</div>
+</footer>
+
+</body>
+</html>

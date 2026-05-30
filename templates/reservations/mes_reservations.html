@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyHome | Mes réservations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --navy: #0d1f3c; --blue: #1e3c72; --gold: #f5a623; --off-white: #f8f9fc; --light-border: #e8edf5; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: #fafcff; }
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 50px; height: 72px; display: flex; align-items: center; justify-content: space-between; background: var(--navy); }
+        .logo { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: white; text-decoration: none; }
+        .logo .accent { color: #ffd87a; }
+        .nav-links a { text-decoration: none; color: rgba(255,255,255,0.85); margin-left: 28px; }
+        .dashboard-container { max-width: 1300px; margin: 0 auto; padding: 110px 30px 60px; }
+        .card { background: white; border-radius: 28px; padding: 30px; box-shadow: 0 10px 35px rgba(0,0,0,0.03); border: 1px solid var(--light-border); }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 14px 8px; background: var(--off-white); }
+        td { padding: 14px 8px; border-bottom: 1px solid var(--light-border); }
+        .btn-pdf { background: var(--blue); color: white; padding: 5px 12px; border-radius: 40px; text-decoration: none; font-size: 12px; }
+        .alert-success { background: #d4edda; color: #155724; padding: 12px; border-radius: 8px; margin-bottom: 20px; }
+        .footer { background: var(--navy); padding: 40px; text-align: center; color: rgba(255,255,255,0.3); margin-top: 40px; }
+        @media (max-width: 800px) { .navbar { padding: 0 24px; } .dashboard-container { padding: 100px 16px 40px; } }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">Easy<span class="accent">Home</span></a>
+    <div class="nav-links" style="display:flex; align-items:center;">
+        <a href="/">Accueil</a>
+        <a href="/logements/">Louer</a>
+        <a href="/users/profil/"><i class="fas fa-user"></i> {{ user.username }}</a>
+        <a href="/users/deconnexion/">Déconnexion</a>
+    </div>
+</nav>
+
+<div class="dashboard-container">
+    <div class="card">
+        <h2 style="margin-bottom:20px;">📋 Mes réservations</h2>
+
+        <!-- ✅ AFFICHAGE DES MESSAGES DE CONFIRMATION -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-success">
+                    ✅ {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Logement</th>
+                    <th>Localisation</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Montant</th>
+                    <th>Statut</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.logement.titre }}</td>
+                    <td>{{ reservation.logement.localisation }}</td>
+                    <td>{{ reservation.date_debut }}</td>
+                    <td>{{ reservation.date_fin }}</td>
+                    <td>{{ reservation.montant_total }} FCFA</td>
+                    <td><span style="background:#ffd87a; padding:3px 12px; border-radius:50px;">{{ reservation.statut }}</span></td>
+                    <td><a href="/reservations/contrat/{{ reservation.id }}/" class="btn-pdf"><i class="fas fa-download"></i> PDF</a></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7">Aucune réservation.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer class="footer">© 2025 EasyHome · Mes réservations</footer>
+
+</body>
+</html>

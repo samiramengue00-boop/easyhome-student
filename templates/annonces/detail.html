@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyHome | {{ logement.titre }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --navy: #0d1f3c;
+            --blue: #1e3c72;
+            --accent: #f5a623;
+            --accent-light: #ffd87a;
+            --white: #ffffff;
+            --off-white: #f8f9fc;
+            --gray: #6c7a8e;
+            --light-border: #e8edf5;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: #fafcff; }
+
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 0 50px; height: 72px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--navy);
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px; font-weight: 900;
+            color: white; text-decoration: none;
+        }
+        .logo .accent { color: var(--accent); }
+        .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+        .nav-links a {
+            text-decoration: none; font-size: 15px; font-weight: 500;
+            color: rgba(255,255,255,0.9);
+        }
+        .nav-links a:hover { color: var(--accent-light); }
+
+        .detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 30px 80px;
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 0.9fr;
+            gap: 40px;
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid var(--light-border);
+        }
+        .detail-photo {
+            background: var(--off-white);
+            padding: 20px;
+        }
+        .detail-photo img {
+            width: 100%;
+            border-radius: 20px;
+        }
+        .detail-info { padding: 40px 40px 40px 0; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: var(--blue); text-decoration: none; font-weight: 600; }
+        .detail-info h1 { font-size: 32px; margin-bottom: 20px; color: var(--navy); }
+        .price-box { background: var(--off-white); padding: 24px; border-radius: 24px; margin: 20px 0; }
+        .price-fcfa { font-size: 32px; font-weight: 900; color: var(--navy); }
+        .specs { display: flex; gap: 30px; margin: 20px 0; padding: 16px 0; border-top: 1px solid var(--light-border); border-bottom: 1px solid var(--light-border); }
+        .spec { text-align: center; flex: 1; }
+        .spec i { font-size: 24px; color: var(--blue); }
+        .btn-reserver {
+            background: var(--blue);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            font-weight: 600;
+        }
+        .btn-reserver:hover { background: var(--navy); }
+
+        .footer {
+            background: var(--navy);
+            padding: 60px 60px 30px;
+            margin-top: 60px;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            font-size: 13px;
+            color: rgba(255,255,255,0.3);
+        }
+
+        @media (max-width: 800px) {
+            .navbar { padding: 0 24px; }
+            .detail-container { padding: 100px 20px 60px; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .detail-info { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="logo">Easy<span class="accent">Home</span></a>
+    <ul class="nav-links">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/logements/">Louer</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="/users/profil/"><i class="fas fa-user"></i> {{ user.username }}</a></li>
+            <li><a href="/users/deconnexion/">Déconnexion</a></li>
+        {% else %}
+            <li><a href="/users/connexion/">Connexion</a></li>
+            <li><a href="/users/inscription/" class="nav-btn">S'inscrire</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<div class="detail-container">
+    <a href="/logements/" class="back-link"><i class="fas fa-arrow-left"></i> Retour aux résultats</a>
+    <div class="detail-grid">
+        <div class="detail-photo">
+            {% if logement.photos.all %}
+                <img id="mainImage" src="{{ logement.photos.first.image.url }}" alt="{{ logement.titre }}" style="width:100%; border-radius:20px; margin-bottom:15px;">
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                    {% for photo in logement.photos.all %}
+                        <img src="{{ photo.image.url }}" alt="Photo {{ forloop.counter }}" 
+                             style="width: 70px; height: 70px; object-fit: cover; border-radius: 10px; cursor: pointer; border: 2px solid transparent;"
+                             onclick="document.getElementById('mainImage').src = this.src">
+                    {% endfor %}
+                </div>
+            {% elif logement.image %}
+                <img src="{{ logement.image.url }}" alt="{{ logement.titre }}" style="width:100%; border-radius:20px;">
+            {% else %}
+                <div style="height:400px; background:var(--off-white); display:flex; align-items:center; justify-content:center;">📷 Aucune photo</div>
+            {% endif %}
+        </div>
+        <div class="detail-info">
+            <h1>{{ logement.titre }}</h1>
+            <div class="price-box">
+                <div class="price-fcfa">{{ logement.prix }} FCFA <span style="font-size:16px;">/ mois</span></div>
+                <div style="margin-top:8px;">📐 Surface : {{ logement.surface|default:"25" }} m²</div>
+                <div>🛏️ Nombre de pièces : {{ logement.nombre_pieces|default:"1" }}</div>
+                <div>🏷️ Type : {{ logement.get_type_logement_display }}</div>
+            </div>
+            <div class="specs">
+                <div class="spec"><i class="fas fa-map-marker-alt"></i><br><strong>Localisation</strong><br>{{ logement.localisation }}</div>
+                <div class="spec"><i class="fas fa-shield-alt"></i><br><strong>Sécurité</strong><br>Quartier sécurisé</div>
+                <div class="spec"><i class="fas fa-wifi"></i><br><strong>Confort</strong><br>Wifi, Clim</div>
+            </div>
+            <div><h3>📄 Description</h3><p style="margin-top:12px; line-height:1.6;">{{ logement.description }}</p></div>
+            {% if user.is_authenticated and user.type_utilisateur == 'etudiant' %}
+                <div style="margin-top:40px;"><a href="/reservations/reserver/{{ logement.id }}/" class="btn-reserver">📅 Réserver ce logement</a></div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-bottom">© 2025 EasyHome · Tous droits réservés · Dakar, Sénégal</div>
+</footer>
+
+</body>
+</html>

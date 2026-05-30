@@ -1,0 +1,264 @@
+/* ===== FOND BLEU GÉNÉRAL ===== */
+body {
+   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+            url('https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=1600');
+background-size: cover;
+background-position: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ===== HEADER ===== */
+.header {
+    background: white;
+    padding: 16px 32px;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #1e3c72;
+    font-weight: 500;
+}
+
+/* ===== BANNIÈRE HERO ===== */
+.hero {
+    background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    padding: 100px 20px;
+    text-align: center;
+    color: white;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 52px;
+    margin-bottom: 16px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 28px;
+}
+
+/* ===== BARRE DE RECHERCHE (moderne) ===== */
+.search-bar {
+    background: white;
+    border-radius: 60px;
+    display: flex;
+    align-items: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 6px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 60px;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-bar button {
+    background: #1e3c72;
+    color: white;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.search-bar button:hover {
+    background: #0f2b4f;
+}
+
+/* ===== DRAPEAUX (coin haut droit) ===== */
+.flags-right {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    padding: 6px 18px;
+    border-radius: 40px;
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    z-index: 20;
+}
+
+/* ===== BLOCS EXPLICATIFS ===== */
+.blocs {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 70px 0;
+}
+
+.bloc {
+    background: white;
+    border-radius: 28px;
+    padding: 30px;
+    text-align: center;
+    flex: 1;
+    min-width: 220px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+}
+
+.bloc i {
+    font-size: 38px;
+    color: #1e3c72;
+}
+
+/* ===== ÉTAPES ===== */
+.etapes {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 30px 0 60px;
+}
+
+.etape {
+    background: #1e3c72;
+    color: white;
+    padding: 10px 28px;
+    border-radius: 60px;
+    font-weight: 600;
+}
+
+/* ===== CARTES LOGEMENTS ===== */
+.logements {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.carte {
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+}
+
+.carte img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.carte h3 {
+    padding: 0 16px;
+    margin: 16px 0 8px;
+}
+
+.carte p {
+    padding: 0 16px;
+    color: #4a5568;
+}
+
+.prix {
+    color: #1e3c72;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 12px 16px;
+}
+
+.btn {
+    display: block;
+    background: #eef2fa;
+    text-align: center;
+    margin: 16px;
+    padding: 10px;
+    border-radius: 40px;
+    text-decoration: none;
+    color: #1e3c72;
+    font-weight: 500;
+}
+
+.btn:hover {
+    background: #1e3c72;
+    color: white;
+}
+
+/* ===== EXPERTISES ===== */
+.expertises {
+    background: white;
+    padding: 60px 20px;
+    border-radius: 48px 48px 0 0;
+    margin-top: 80px;
+}
+
+.expertises-grid {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.expertise-card {
+    background: #f8faff;
+    border-radius: 28px;
+    padding: 28px;
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+}
+
+.expertise-card i {
+    font-size: 40px;
+    color: #1e3c72;
+}
+
+.btn-expertises {
+    background: #eef2fa;
+    color: #1e3c72;
+    padding: 12px 32px;
+    border-radius: 40px;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.btn-expertises:hover {
+    background: #1e3c72;
+    color: white;
+}
