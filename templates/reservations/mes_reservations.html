@@ -8,29 +8,221 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --navy: #0d1f3c; --blue: #1e3c72; --gold: #f5a623; --off-white: #f8f9fc; --light-border: #e8edf5; }
+        :root {
+            --navy: #0d1f3c;
+            --blue: #1e3c72;
+            --gold: #f5a623;
+            --gold-light: #ffd87a;
+            --off-white: #f8f9fc;
+            --light-border: #e8edf5;
+            --gray: #6c7a8e;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'DM Sans', sans-serif; background: #fafcff; }
-        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 50px; height: 72px; display: flex; align-items: center; justify-content: space-between; background: var(--navy); }
-        .logo { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: white; text-decoration: none; }
-        .logo .accent { color: #ffd87a; }
-        .nav-links a { text-decoration: none; color: rgba(255,255,255,0.85); margin-left: 28px; }
-        .dashboard-container { max-width: 1300px; margin: 0 auto; padding: 110px 30px 60px; }
-        .card { background: white; border-radius: 28px; padding: 30px; box-shadow: 0 10px 35px rgba(0,0,0,0.03); border: 1px solid var(--light-border); }
-        table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; padding: 14px 8px; background: var(--off-white); }
-        td { padding: 14px 8px; border-bottom: 1px solid var(--light-border); }
-        .btn-pdf { background: var(--blue); color: white; padding: 5px 12px; border-radius: 40px; text-decoration: none; font-size: 12px; }
-        .alert-success { background: #d4edda; color: #155724; padding: 12px; border-radius: 8px; margin-bottom: 20px; }
-        .footer { background: var(--navy); padding: 40px; text-align: center; color: rgba(255,255,255,0.3); margin-top: 40px; }
-        @media (max-width: 800px) { .navbar { padding: 0 24px; } .dashboard-container { padding: 100px 16px 40px; } }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 0 50px; height: 72px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--navy);
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px; font-weight: 900;
+            color: white; text-decoration: none;
+        }
+        .logo .accent { color: var(--gold-light); }
+        .nav-links { display: flex; align-items: center; gap: 24px; }
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.85);
+            font-size: 15px; font-weight: 500;
+        }
+        .nav-links a:hover { color: var(--gold-light); }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 24px 60px;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            margin-bottom: 30px;
+        }
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px; font-weight: 900;
+            color: var(--navy);
+        }
+
+        /* ALERT */
+        .alert-success {
+            background: #d4edda; color: #155724;
+            padding: 14px 18px; border-radius: 12px;
+            margin-bottom: 20px; font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* CARD */
+        .card {
+            background: white; border-radius: 24px;
+            padding: 28px; border: 1px solid var(--light-border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        }
+
+        /* TABLE VERSION DESKTOP */
+        .table-desktop { width: 100%; }
+        .table-desktop table {
+            width: 100%; border-collapse: collapse;
+        }
+        .table-desktop th {
+            text-align: left; padding: 14px 12px;
+            background: var(--off-white);
+            font-size: 13px; font-weight: 600;
+            color: var(--navy);
+            border-bottom: 1px solid var(--light-border);
+        }
+        .table-desktop td {
+            padding: 14px 12px;
+            border-bottom: 1px solid var(--light-border);
+            color: var(--gray); font-size: 14px;
+        }
+        .statut-badge {
+            background: var(--gold-light);
+            color: var(--navy);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        .statut-badge.confirmee {
+            background: #d1e7dd; color: #0f5132;
+        }
+        .statut-badge.annulee {
+            background: #f8d7da; color: #842029;
+        }
+        .btn-pdf {
+            background: var(--blue); color: white;
+            padding: 8px 16px; border-radius: 50px;
+            text-decoration: none; font-size: 12px;
+            font-weight: 600; display: inline-flex;
+            align-items: center; gap: 6px;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .btn-pdf:hover { background: var(--navy); }
+
+        /* CARDS VERSION MOBILE */
+        .cards-mobile { display: none; }
+        .resa-card {
+            background: var(--off-white);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--light-border);
+        }
+        .resa-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+        .resa-card-title {
+            font-size: 16px; font-weight: 600;
+            color: var(--navy); margin-bottom: 4px;
+        }
+        .resa-card-location {
+            font-size: 12px; color: var(--gray);
+            display: flex; align-items: center; gap: 4px;
+        }
+        .resa-card-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .resa-info-item label {
+            font-size: 11px; font-weight: 700;
+            color: var(--gray); text-transform: uppercase;
+            letter-spacing: 0.5px; display: block;
+            margin-bottom: 2px;
+        }
+        .resa-info-item span {
+            font-size: 14px; color: var(--navy); font-weight: 500;
+        }
+        .resa-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--light-border);
+            padding-top: 14px;
+        }
+        .resa-montant {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px; font-weight: 900;
+            color: var(--navy);
+        }
+        .resa-montant small {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px; font-weight: 400;
+            color: var(--gray);
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center; padding: 60px 20px;
+            color: var(--gray);
+        }
+        .empty-state i {
+            font-size: 48px; margin-bottom: 16px;
+            display: block; color: var(--light-border);
+        }
+        .empty-state p { font-size: 16px; margin-bottom: 20px; }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--blue); color: white;
+            padding: 12px 24px; border-radius: 50px;
+            text-decoration: none; font-weight: 600;
+            transition: background 0.2s;
+        }
+        .btn-primary:hover { background: var(--navy); }
+
+        /* FOOTER */
+        .footer {
+            background: var(--navy);
+            padding: 30px 24px;
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 13px;
+            margin-top: 40px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .navbar { padding: 0 20px; }
+            .nav-links { gap: 14px; }
+            .nav-links a { font-size: 13px; }
+            .container { padding: 90px 16px 40px; }
+            .page-header h1 { font-size: 26px; }
+            .card { padding: 20px 16px; }
+
+            /* Cache le tableau sur mobile */
+            .table-desktop { display: none; }
+
+            /* Affiche les cartes sur mobile */
+            .cards-mobile { display: block; }
+        }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
     <a href="/" class="logo">Easy<span class="accent">Home</span></a>
-    <div class="nav-links" style="display:flex; align-items:center;">
+    <div class="nav-links">
         <a href="/">Accueil</a>
         <a href="/logements/">Louer</a>
         <a href="/users/profil/"><i class="fas fa-user"></i> {{ user.username }}</a>
@@ -38,53 +230,114 @@
     </div>
 </nav>
 
-<div class="dashboard-container">
+<div class="container">
+
+    <div class="page-header">
+        <h1>📋 Mes réservations</h1>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert-success">✅ {{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
     <div class="card">
-        <h2 style="margin-bottom:20px;">📋 Mes réservations</h2>
+        {% if reservations %}
 
-        <!-- ✅ AFFICHAGE DES MESSAGES DE CONFIRMATION -->
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert-success">
-                    ✅ {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
+            <!-- VERSION DESKTOP — Tableau -->
+            <div class="table-desktop">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Logement</th>
+                            <th>Localisation</th>
+                            <th>Début</th>
+                            <th>Fin</th>
+                            <th>Montant</th>
+                            <th>Statut</th>
+                            <th>Contrat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reservation in reservations %}
+                        <tr>
+                            <td><strong>{{ reservation.logement.titre }}</strong></td>
+                            <td>
+                                <i class="fas fa-map-marker-alt" style="color:var(--blue); margin-right:4px;"></i>
+                                {{ reservation.logement.localisation }}
+                            </td>
+                            <td>{{ reservation.date_debut }}</td>
+                            <td>{{ reservation.date_fin }}</td>
+                            <td><strong>{{ reservation.montant_total }} FCFA</strong></td>
+                            <td>
+                                <span class="statut-badge {% if reservation.statut == 'confirmee' %}confirmee{% elif reservation.statut == 'annulee' %}annulee{% endif %}">
+                                    {{ reservation.statut }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="/reservations/contrat/{{ reservation.id }}/" class="btn-pdf">
+                                    <i class="fas fa-download"></i> PDF
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Logement</th>
-                    <th>Localisation</th>
-                    <th>Début</th>
-                    <th>Fin</th>
-                    <th>Montant</th>
-                    <th>Statut</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
+            <!-- VERSION MOBILE — Cartes -->
+            <div class="cards-mobile">
                 {% for reservation in reservations %}
-                <tr>
-                    <td>{{ reservation.logement.titre }}</td>
-                    <td>{{ reservation.logement.localisation }}</td>
-                    <td>{{ reservation.date_debut }}</td>
-                    <td>{{ reservation.date_fin }}</td>
-                    <td>{{ reservation.montant_total }} FCFA</td>
-                    <td><span style="background:#ffd87a; padding:3px 12px; border-radius:50px;">{{ reservation.statut }}</span></td>
-                    <td><a href="/reservations/contrat/{{ reservation.id }}/" class="btn-pdf"><i class="fas fa-download"></i> PDF</a></td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="7">Aucune réservation.</td>
-                </tr>
+                <div class="resa-card">
+                    <div class="resa-card-header">
+                        <div>
+                            <div class="resa-card-title">{{ reservation.logement.titre }}</div>
+                            <div class="resa-card-location">
+                                <i class="fas fa-map-marker-alt" style="color:var(--blue);"></i>
+                                {{ reservation.logement.localisation }}
+                            </div>
+                        </div>
+                        <span class="statut-badge {% if reservation.statut == 'confirmee' %}confirmee{% elif reservation.statut == 'annulee' %}annulee{% endif %}">
+                            {{ reservation.statut }}
+                        </span>
+                    </div>
+                    <div class="resa-card-body">
+                        <div class="resa-info-item">
+                            <label>Date début</label>
+                            <span>{{ reservation.date_debut }}</span>
+                        </div>
+                        <div class="resa-info-item">
+                            <label>Date fin</label>
+                            <span>{{ reservation.date_fin }}</span>
+                        </div>
+                    </div>
+                    <div class="resa-card-footer">
+                        <div class="resa-montant">
+                            {{ reservation.montant_total }}
+                            <small>FCFA</small>
+                        </div>
+                        <a href="/reservations/contrat/{{ reservation.id }}/" class="btn-pdf">
+                            <i class="fas fa-download"></i> Télécharger PDF
+                        </a>
+                    </div>
+                </div>
                 {% endfor %}
-            </tbody>
-        </table>
+            </div>
+
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-calendar-times"></i>
+                <p>Vous n'avez pas encore de réservation.</p>
+                <a href="/logements/" class="btn-primary">
+                    <i class="fas fa-search"></i> Trouver un logement
+                </a>
+            </div>
+        {% endif %}
     </div>
 </div>
 
-<footer class="footer">© 2025 EasyHome · Mes réservations</footer>
+<footer class="footer">© 2025 EasyHome · Tous droits réservés · Dakar, Sénégal</footer>
 
 </body>
 </html>
