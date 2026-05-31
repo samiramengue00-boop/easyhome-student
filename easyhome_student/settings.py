@@ -14,7 +14,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-ce3b+-a+o$lv47f_^uqd3
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['*.railway.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'easyhome-student-production.up.railway.app',
+    '*.up.railway.app',
+    '*.railway.app',
+    'localhost',
+    '127.0.0.1'
+]
 
 # ===== APPLICATIONS =====
 INSTALLED_APPS = [
@@ -32,7 +38,7 @@ INSTALLED_APPS = [
 # ===== MIDDLEWARE =====
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ← AJOUTÉ pour Railway
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
