@@ -3,7 +3,7 @@ import string
 from datetime import timedelta
 from django.utils import timezone
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -39,6 +39,7 @@ def inscription(request):
     
     return render(request, 'users/inscription.html')
 
+
 def connexion(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -46,37 +47,23 @@ def connexion(request):
         user = authenticate(request, username=username, password=password)
         
         if user is not None:
-            # Générer un code à 6 chiffres
-            code = ''.join(random.choices(string.digits, k=6))
-            user.code_2fa = code
-            user.code_2fa_expiration = timezone.now() + timedelta(minutes=5)
-            user.save()
-            
-            # Envoyer le code par email
-            try:
-                send_mail(
-                    subject='🔐 Votre code de connexion EasyHome',
-                    message=f'Bonjour {user.username},\n\nVotre code de connexion est : {code}\n\nCe code est valable 5 minutes.\n\nL\'équipe EasyHome',
-                    from_email='noreply@easyhome.sn',
-                    recipient_list=[user.email],
-                    fail_silently=True,
-                )
-            except:
-                pass
-            
-            request.session['user_id'] = user.id
-            return redirect('verifier_code')
+            login(request, user)
+            if user.type_utilisateur == 'proprietaire':
+                return redirect('dashboard_proprietaire')
+            else:
+                return redirect('accueil')
         else:
             messages.error(request, 'Nom d\'utilisateur ou mot de passe incorrect')
     
     return render(request, 'users/connexion.html')
+
 
 def verifier_code(request):
     user_id = request.session.get('user_id')
     if not user_id:
         return redirect('connexion')
     
-    user = Utilisateur.objects.get(id=user_id)
+    user = get_object_or_404(Utilisateur, id=user_id)
     
     if request.method == 'POST':
         code_saisi = request.POST.get('code')
@@ -99,9 +86,11 @@ def verifier_code(request):
     
     return render(request, 'users/verifier_code.html', {'email': user.email})
 
+
 def deconnexion(request):
     logout(request)
     return redirect('accueil')
+
 
 @login_required
 def modifier_profil(request):
