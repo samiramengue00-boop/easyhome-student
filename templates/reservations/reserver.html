@@ -18,97 +18,66 @@
             --gray: #6c7a8e;
             --light-border: #e8edf5;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--navy); }
 
-        /* ===== NAVBAR (identique accueil) ===== */
         .navbar {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
             padding: 0 50px; height: 72px;
             display: flex; align-items: center; justify-content: space-between;
             background: var(--navy);
         }
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 26px; font-weight: 900;
-            color: white;
-            text-decoration: none;
-        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 900; color: white; text-decoration: none; }
         .logo .accent { color: var(--accent); }
         .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
-        .nav-links a {
-            text-decoration: none; font-size: 15px; font-weight: 500;
-            color: rgba(255,255,255,0.9);
-        }
+        .nav-links a { text-decoration: none; font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.9); }
         .nav-links a:hover { color: var(--accent-light); }
 
-        /* ===== FORMULAIRE RÉSERVATION ===== */
-        .booking-container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 130px 20px 80px;
-        }
+        .booking-container { max-width: 600px; margin: 0 auto; padding: 130px 20px 80px; }
         .booking-card {
-            background: white;
-            border-radius: 28px;
-            padding: 40px;
+            background: white; border-radius: 28px; padding: 40px;
             border: 1px solid var(--light-border);
             box-shadow: 0 8px 24px rgba(13,31,60,0.05);
         }
-        .booking-card h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--navy);
-            margin-bottom: 8px;
-        }
-        .booking-card h2 {
-            font-size: 22px;
-            margin-bottom: 16px;
-        }
-        .price-box {
-            background: var(--off-white);
-            padding: 20px;
-            border-radius: 20px;
-            margin: 20px 0;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            font-weight: 600;
-            display: block;
-            margin-bottom: 6px;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 12px;
+        .booking-card h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--navy); margin-bottom: 8px; }
+        .booking-card h2 { font-size: 22px; margin-bottom: 16px; }
+        .price-box { background: var(--off-white); padding: 20px; border-radius: 20px; margin: 20px 0; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { font-weight: 600; display: block; margin-bottom: 6px; }
+        .form-group input[type="date"] {
+            width: 100%; padding: 12px;
             border: 1.5px solid var(--light-border);
-            border-radius: 16px;
-            font-size: 15px;
+            border-radius: 16px; font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
         }
-        button {
-            background: var(--blue);
-            color: white;
-            width: 100%;
-            padding: 14px;
-            border-radius: 40px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
+        .form-group input[type="date"]:focus {
+            outline: none;
+            border-color: var(--blue);
         }
-        button:hover { background: var(--navy); }
+        .total-box {
+            margin: 20px 0; font-size: 18px; font-weight: bold;
+            text-align: center; padding: 16px;
+            background: var(--off-white); border-radius: 16px;
+        }
+        .btn-submit {
+            background: var(--blue); color: white; width: 100%;
+            padding: 16px; border-radius: 40px; font-weight: 600;
+            font-size: 16px; border: none; cursor: pointer;
+            transition: background 0.2s, opacity 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-submit:hover:not(:disabled) { background: var(--navy); }
+        .btn-submit:disabled { opacity: 0.45; cursor: not-allowed; }
 
-        .footer {
-            background: var(--navy);
-            padding: 60px 60px 30px;
-            margin-top: 40px;
+        .alert-error {
+            background: #f8d7da; color: #842029;
+            padding: 12px 16px; border-radius: 12px;
+            margin-bottom: 16px; font-size: 14px;
         }
-        .footer-bottom {
-            text-align: center;
-            color: rgba(255,255,255,0.3);
-        }
+
+        .footer { background: var(--navy); padding: 60px 60px 30px; margin-top: 40px; }
+        .footer-bottom { text-align: center; color: rgba(255,255,255,0.3); }
+
         @media (max-width: 800px) {
             .navbar { padding: 0 24px; }
             .booking-container { padding: 110px 20px 60px; }
@@ -128,34 +97,57 @@
             <li><a href="/users/deconnexion/">Déconnexion</a></li>
         {% else %}
             <li><a href="/users/connexion/">Connexion</a></li>
-            <li><a href="/users/inscription/" class="nav-btn">S'inscrire</a></li>
+            <li><a href="/users/inscription/">S'inscrire</a></li>
         {% endif %}
     </ul>
 </nav>
 
 <div class="booking-container">
     <div class="booking-card">
-        <h1>📅 Réservation</h1>
+
+        <h1>Réservation</h1>
         <h2>{{ logement.titre }}</h2>
+
         <div class="price-box">
             <div><strong>📍 {{ logement.localisation }}</strong></div>
-            <div class="prix" style="font-size: 24px; color: var(--blue); font-weight: 700;">{{ logement.prix }} FCFA / mois</div>
+            <div style="font-size: 24px; color: var(--blue); font-weight: 700; margin-top: 6px;">
+                {{ logement.prix }} FCFA / mois
+            </div>
         </div>
 
-        <form method="POST" id="reservationForm">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert-error">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'reserver' logement.id %}">
             {% csrf_token %}
+
             <div class="form-group">
-                <label>📅 Date d'arrivée</label>
+                <label for="date_debut">Date d'arrivée</label>
                 <input type="date" name="date_debut" id="date_debut" required>
             </div>
+
             <div class="form-group">
-                <label>📅 Date de départ</label>
+                <label for="date_fin">Date de départ</label>
                 <input type="date" name="date_fin" id="date_fin" required>
             </div>
-            <div id="total" style="margin: 20px 0; font-size: 18px; font-weight: bold; text-align: center;">💰 Total : 0 FCFA</div>
-            <button type="submit">Confirmer la réservation</button>
+
+            <div class="total-box" id="total">
+                Sélectionnez vos dates pour voir le total
+            </div>
+
+            <button type="submit" class="btn-submit" id="btnConfirmer" disabled>
+                Confirmer la réservation
+            </button>
+
         </form>
-        <p style="text-align: center; margin-top: 20px;"><a href="/logements/{{ logement.id }}/">← Annuler</a></p>
+
+        <p style="text-align: center; margin-top: 20px;">
+            <a href="/logements/{{ logement.id }}/" style="color: var(--gray); text-decoration: none;">← Annuler</a>
+        </p>
+
     </div>
 </div>
 
@@ -168,21 +160,33 @@
     const dateDebut = document.getElementById('date_debut');
     const dateFin = document.getElementById('date_fin');
     const totalDiv = document.getElementById('total');
+    const btn = document.getElementById('btnConfirmer');
 
     function calculerTotal() {
-        if (dateDebut.value && dateFin.value) {
-            const debut = new Date(dateDebut.value);
-            const fin = new Date(dateFin.value);
-            if (fin > debut) {
-                const jours = (fin - debut) / (1000 * 3600 * 24);
-                const mois = jours / 30;
-                const total = Math.round(mois * loyerMensuel);
-                totalDiv.innerHTML = `💰 Total : ${total.toLocaleString()} FCFA (${Math.round(mois)} mois)`;
-                totalDiv.style.color = '#1e3c72';
-            } else {
-                totalDiv.innerHTML = '⚠️ La date de départ doit être après la date d\'arrivée';
-            }
+        const d1 = dateDebut.value;
+        const d2 = dateFin.value;
+
+        if (!d1 || !d2) return;
+
+        const debut = new Date(d1);
+        const fin = new Date(d2);
+        const diffMs = fin - debut;
+
+        if (diffMs <= 0) {
+            totalDiv.innerHTML = '⚠️ La date de départ doit être après la date d\'arrivée';
+            totalDiv.style.color = '#842029';
+            btn.disabled = true;
+            return;
         }
+
+        const jours = diffMs / (1000 * 3600 * 24);
+        const mois = jours / 30;
+        const total = Math.round(mois * loyerMensuel);
+
+        totalDiv.innerHTML = '💰 Total estimé : <strong>' + total.toLocaleString('fr-FR') + ' FCFA</strong> (' + Math.round(mois * 10) / 10 + ' mois)';
+        totalDiv.style.color = '#1e3c72';
+
+        btn.disabled = false;
     }
 
     dateDebut.addEventListener('change', calculerTotal);

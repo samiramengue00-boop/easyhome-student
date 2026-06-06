@@ -1,0 +1,21 @@
+[33m1c05843[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m fix xhtml2pdf with apt cairo
+[33m2fcb8cb[m fix xhtml2pdf no version
+[33m44b98e7[m fix reportlab version
+[33mec34a31[m add nixpacks config
+[33m5c6b4a9[m try xhtml2pdf 0.2.16
+[33m467b1af[m downgrade xhtml2pdf to fix pycairo
+[33m0c9e9cd[m clean requirements remove pycairo rlpycairo
+[33m5b7a5be[m Nettoyage requirements.txt
+[33m92c83e5[m fix gunicorn timeout
+[33mccf3eb1[m fix email 2fa from_email et fail_silently
+[33m9841336[m Ajout Cloudinary pour les photos
+[33m4075704[m fix responsive mes reservations
+[33m892095b[m redeploy email fix
+[33m4415b77[m fix csrf trusted origins
+[33mf0d6e83[m fix allowed hosts
+[33mb400616[m trigger new build
+[33m49dfc6d[m redeploy
+[33mc726d76[m clean requirements
+[33me78e13d[m fix requirements pycairo
+[33m9060583[m trigger redeploy
+[33mee9d051[m EasyHome Student version finale
