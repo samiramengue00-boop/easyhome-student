@@ -105,10 +105,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-only-key-change-i
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
-    'easyhome-student-production.up.railway.app',
-    '*.up.railway.app',
     'localhost',
     '127.0.0.1',
+    '.onrender.com',      # Pour Render
+    '.railway.app',       # Pour Railway
+    'easyhome-student.onrender.com',  # Votre URL exacte
 ]
 
 CSRF_TRUSTED_ORIGINS = [
