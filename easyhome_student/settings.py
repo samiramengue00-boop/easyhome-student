@@ -94,7 +94,7 @@ TIME_ZONE = 'Africa/Dakar'
 USE_I18N = True
 USE_TZ = True
 
-DEFAULTfrom pathlib import Path
+from pathlib import Path
 import os
 import dj_database_url
 
